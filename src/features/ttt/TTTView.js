@@ -133,5 +133,4 @@ export class TTTView extends Component {
 	}
 }
 
-
 export default connect((state) => state.ttt, actions)(TTTView);
