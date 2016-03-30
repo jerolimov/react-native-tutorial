@@ -1,33 +1,37 @@
 
-import React, { Alert, Component, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { Alert, Component, ScrollView, StyleSheet, Text, View } from 'react-native';
+
+import cities from './cities';
 
 const styles = StyleSheet.create({
 	container: {
+		paddingTop: 20,
 		flex: 1,
-		justifyContent: 'center',
-		backgroundColor: '#eee'
+		backgroundColor: 'gray'
 	},
-	button: {
-		margin: 16,
-		padding: 16,
-		backgroundColor: '#53c5ff'
+	contentContainer: {
 	},
-	text: {
-		textAlign: 'center',
-		fontSize: 22,
-		fontWeight: 'bold',
-		color: 'white'
+	city: {
+		margin: 10,
+		fontSize: 18,
+		fontWeight: 'bold'
 	}
 });
+
+cities[0] = 'Vielvielvielvielvielvielvielvielzulangerstädtename';
 
 export default class App extends Component {
 	render() {
 		return (
-			<View style={ styles.container }>
-				<TouchableOpacity onPress={ () => Alert.alert('Button pressed!') } style={ styles.button }>
-					<Text style={ styles.text }>Hello world !!!</Text>
-				</TouchableOpacity>
-			</View>
+			<ScrollView style={ styles.container } contentContainerStyle={ styles.contentContainer }>
+
+				{
+					cities.filter((city, index) => index < 1000).map((city, index) => {
+						return <Text key={ city } style={ styles.city }>{ index + 1 }. { city }</Text>
+					})
+				}
+
+			</ScrollView>
 		);
 	}
 }
