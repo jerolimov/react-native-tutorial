@@ -1,5 +1,7 @@
 
-import React, { Alert, Component, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { Alert, Component, Platform, StyleSheet, Text, View } from 'react-native';
+
+import Button from './Button';
 
 const styles = StyleSheet.create({
 	container: {
@@ -8,15 +10,12 @@ const styles = StyleSheet.create({
 		backgroundColor: '#eee'
 	},
 	button: {
-		margin: 16,
-		padding: 16,
-		backgroundColor: '#53c5ff'
+		margin: 10
 	},
 	text: {
 		textAlign: 'center',
-		fontSize: 22,
-		fontWeight: 'bold',
-		color: 'white'
+		fontSize: 18,
+		fontWeight: 'bold'
 	}
 });
 
@@ -24,9 +23,17 @@ export default class App extends Component {
 	render() {
 		return (
 			<View style={ styles.container }>
-				<TouchableOpacity onPress={ () => Alert.alert('Button pressed!') } style={ styles.button }>
-					<Text style={ styles.text }>Hello world !!!</Text>
-				</TouchableOpacity>
+
+				{
+					Platform.OS === 'android'
+							? <Text style={ styles.text }>"Android" buttons:</Text>
+							: <Text style={ styles.text }>"iOS" buttons:</Text>
+				}
+
+				<Button label="My button 1" style={ styles.button } onPress={ () => Alert.alert('Button 1 pressed!') } />
+				<Button label="My button 2" style={ styles.button } onPress={ () => Alert.alert('Button 2 pressed!') } />
+				<Button label="My button 3" style={ styles.button } onPress={ () => Alert.alert('Button 3 pressed!') } />
+
 			</View>
 		);
 	}
