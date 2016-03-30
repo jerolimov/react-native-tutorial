@@ -1,33 +1,46 @@
 
-import React, { Alert, Component, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { Alert, Component, ListView, StyleSheet, Text, View } from 'react-native';
+
+import cities from './cities';
 
 const styles = StyleSheet.create({
 	container: {
+		paddingTop: 20,
 		flex: 1,
-		justifyContent: 'center',
-		backgroundColor: '#eee'
+		backgroundColor: 'gray'
 	},
-	button: {
-		margin: 16,
-		padding: 16,
-		backgroundColor: '#53c5ff'
-	},
-	text: {
-		textAlign: 'center',
-		fontSize: 22,
-		fontWeight: 'bold',
-		color: 'white'
+	city: {
+		margin: 10,
+		fontSize: 18,
+		fontWeight: 'bold'
 	}
 });
 
+cities[0] = 'Vielvielvielvielvielvielvielvielzulangerstädtename';
+
+const cityDataSource = new ListView.DataSource({
+	rowHasChanged: (r1, r2) => r1 !== r2
+});
+
 export default class App extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			dataSource: cityDataSource.cloneWithRows(cities)
+		};
+	}
+
 	render() {
 		return (
-			<View style={ styles.container }>
-				<TouchableOpacity onPress={ () => Alert.alert('Button pressed!') } style={ styles.button }>
-					<Text style={ styles.text }>Hello world !!!</Text>
-				</TouchableOpacity>
-			</View>
-		);
+			<ListView
+					dataSource={ this.state.dataSource }
+					renderRow={ this.renderRow }
+					style={ styles.container }
+			/>
+		)
+	}
+
+	renderRow(rowData, sectionID, rowID, highlightRow) {
+		return <Text style={ styles.city }>{ parseInt(rowID) + 1 }. { rowData }</Text>;
 	}
 }
