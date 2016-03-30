@@ -1,31 +1,66 @@
 
-import React, { Alert, Component, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { Component, LayoutAnimation, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		paddingTop: 20,
+		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: '#eee'
+		backgroundColor: 'gray'
 	},
 	button: {
-		margin: 16,
-		padding: 16,
-		backgroundColor: '#53c5ff'
+		position: 'absolute',
+		left: 16,
+		right: 16,
+		bottom: 16,
+		padding: 10,
+		borderWidth: 2,
+		borderColor: 'white',
+		borderRadius: 10
 	},
 	text: {
-		textAlign: 'center',
-		fontSize: 22,
+		fontSize: 18,
 		fontWeight: 'bold',
-		color: 'white'
+		color: 'white',
+		backgroundColor: 'transparent'
 	}
 });
 
 export default class App extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			boxWidth: 200,
+			boxHeight: 100
+		};
+	}
+
+	toggle() {
+		LayoutAnimation.spring();
+		this.setState({
+			boxWidth: this.state.boxWidth !== 200 ? 200 : 100,
+			boxHeight: this.state.boxHeight !== 100 ? 100 : 200
+		});
+	}
+
+	componentWillMount() {
+		LayoutAnimation.spring();
+	}
+
 	render() {
+		const width = this.state.boxWidth;
+		const height = this.state.boxHeight;
+
 		return (
 			<View style={ styles.container }>
-				<TouchableOpacity onPress={ () => Alert.alert('Button pressed!') } style={ styles.button }>
-					<Text style={ styles.text }>Hello world !!!</Text>
+
+				<View style={{ width, height, backgroundColor: 'lightgray' }}>
+					<Text style={ styles.text }>{ width } x { height }</Text>
+				</View>
+
+				<TouchableOpacity style={ styles.button } onPress={ this.toggle.bind(this) }>
+					<Text style={ styles.text }>Toggle</Text>
 				</TouchableOpacity>
 			</View>
 		);
